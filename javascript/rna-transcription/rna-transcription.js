@@ -1,19 +1,21 @@
-var translations = {
-  A: 'U',
-  T: 'A',
+var DnaTranscriber = function () {};
+
+var dnaToRna = {
+  G: 'C',
   C: 'G',
-  G: 'C'
+  T: 'A',
+  A: 'U'
 };
 
-function toRna(strand) {
-  strand = strand.split('');
-  return strand.map(translate).join('');
-}
+var transcribeDna = function (dna, change) {
+  return dna.replace(/./g, function (dna1) {
+    if (!(dna1 in change)) { throw Error('Invalid input'); }
+    return change[dna1];
+  });
+};
 
-function translate(nucleotide) {
-  return translations[nucleotide];
-}
+DnaTranscriber.prototype.toRna = function (dna) {
+  return transcribeDna(dna, dnaToRna);
+};
 
-module.exports = toRna;
-
-module.exports = dnaTranscriber;
+module.exports = DnaTranscriber;
